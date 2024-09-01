@@ -21,14 +21,21 @@ async function getCoordinates(city, state) {
     const response = await fetch(coordinatesApiUrl);
     const data = await response.json();
 
-    return getWeather(data[0].lat, data[0].lon);
+    return getWeather(data[0].lat, data[0].lon, data[0].name, data[0].state);
 }
 
-async function getWeather(latitude, longitude) {
+async function getWeather(latitude, longitude, city, state) {
 
     const weatherApiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`;
     const response = await fetch(weatherApiUrl);
     const data = await response.json();
 
-    console.log(data.current);
+    return populateCurrentWeather(data.current.temp, data.current.weather[0].main, city, state);
+}
+
+function populateCurrentWeather(currentTemp, currentDescription, cityName, stateName) {
+    document.querySelector(".current-weather-info .location.city").innerText = cityName;
+    document.querySelector(".current-weather-info .location.state").innerText = stateName;
+    document.querySelector(".current-weather-info .temperature").innerText = `${currentTemp}\u00B0`;
+    document.querySelector(".current-weather-info .description").innerText = currentDescription;
 }
