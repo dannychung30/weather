@@ -8,10 +8,10 @@ document.querySelector("form").addEventListener("submit", function(e) {
     const state = document.querySelector(".weather-form .state-input").value;
 
     if (city != "" && state != "") {
-        getCoordinates(city, state);
+        return getCoordinates(city, state);
     }
 
-    
+    console.log("Error");
 
 });
 
@@ -21,7 +21,7 @@ async function getCoordinates(city, state) {
     const response = await fetch(coordinatesApiUrl);
     const data = await response.json();
 
-    getWeather(data[0].lat, data[0].lon);
+    return getWeather(data[0].lat, data[0].lon);
 }
 
 async function getWeather(latitude, longitude) {
