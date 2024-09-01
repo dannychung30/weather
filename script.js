@@ -7,7 +7,11 @@ document.querySelector("form").addEventListener("submit", function(e) {
     const city = document.querySelector(".weather-form .city-input").value;
     const state = document.querySelector(".weather-form .state-input").value;
 
-    getCoordinates(city, state);
+    if (city != "" && state != "") {
+        getCoordinates(city, state);
+    }
+
+    
 
 });
 
