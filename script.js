@@ -40,11 +40,13 @@ async function getWeatherData(latitude, longitude, city, state) {
     console.log(data.hourly[6]);
 
     populateCurrentWeather(data.current.temp, data.current.weather[0].main, city, state);
-    convertToLocalTime().then({
-        function(times) {
-            populateHourlyWeather();
-        }
-    });
+    populateHourlyWeather(data.hourly);
+    // convertToLocalTime().then({
+    //     function(times) {
+    //         populateHourlyWeather();
+    //     }
+    // });
+    // convertToLocalTime();
 }
 
 function populateCurrentWeather(currentTemp, currentDescription, cityName, stateName) {
@@ -54,10 +56,17 @@ function populateCurrentWeather(currentTemp, currentDescription, cityName, state
     document.querySelector(".current-weather-info .description").innerText = currentDescription;
 }
 
-function populateHourlyWeather() {
-    
+async function populateHourlyWeather(hourlyData) {
+    console.log(hourlyData);
+    const convertedTimes = await convertToLocalTime(1725595200);
+
+    console.log(convertedTimes);
+
 }
 
-async function convertToLocalTime(unixTimestamp) {
+function convertToLocalTime(unixTimestamp) {
+    const date = new Date(unixTimestamp * 1000);
+    const hours = ((date.getHours() + 11) % 12 + 1);
 
+    return hours;
 }
