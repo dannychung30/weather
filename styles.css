@@ -3,4 +3,34 @@ body, html {
     box-sizing: border-box;
 }
 
+.current-weather-info .flex-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
+.current-weather-info .location.city {
+    font-size: 2.5em;
+    font-weight: 500;
+    margin: 0;
+}
+
+.current-weather-info .location.state {
+    font-size: 1.125em;
+    font-weight: 500;
+    margin: 0;
+}
+
+.current-weather-info .temperature {
+    font-size: 7em;
+}
+
+.current-weather-info .description {
+    font-size: 1.25em;
+}
+
+.current-weather-info .high-low-temps {
+    display: flex;
+    column-gap: 1em;
+    font-size: 1.25em;
+}
