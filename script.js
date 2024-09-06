@@ -21,21 +21,43 @@ async function getCoordinates(city, state) {
     const response = await fetch(coordinatesApiUrl);
     const data = await response.json();
 
-    return getWeather(data[0].lat, data[0].lon, data[0].name, data[0].state);
+    return getWeatherData(data[0].lat, data[0].lon, data[0].name, data[0].state);
 }
 
-async function getWeather(latitude, longitude, city, state) {
+async function getWeatherData(latitude, longitude, city, state) {
 
     const weatherApiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`;
     const response = await fetch(weatherApiUrl);
     const data = await response.json();
 
-    return populateCurrentWeather(data.current.temp, data.current.weather[0].main, city, state);
+    console.log(data);
+    console.log(data.hourly[0]);
+    console.log(data.hourly[1]);
+    console.log(data.hourly[2]);
+    console.log(data.hourly[3]);
+    console.log(data.hourly[4]);
+    console.log(data.hourly[5]);
+    console.log(data.hourly[6]);
+
+    populateCurrentWeather(data.current.temp, data.current.weather[0].main, city, state);
+    convertToLocalTime().then({
+        function(times) {
+            populateHourlyWeather();
+        }
+    });
 }
 
 function populateCurrentWeather(currentTemp, currentDescription, cityName, stateName) {
     document.querySelector(".current-weather-info .location.city").innerText = cityName;
     document.querySelector(".current-weather-info .location.state").innerText = stateName;
-    document.querySelector(".current-weather-info .temperature").innerText = `${currentTemp}\u00B0`;
+    document.querySelector(".current-weather-info .temperature").innerText = (Math.round(parseFloat(currentTemp))).toString() + "\u00B0";
     document.querySelector(".current-weather-info .description").innerText = currentDescription;
+}
+
+function populateHourlyWeather() {
+    
+}
+
+async function convertToLocalTime(unixTimestamp) {
+
 }
