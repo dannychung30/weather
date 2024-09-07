@@ -17,7 +17,7 @@ document.querySelector("form").addEventListener("submit", function(e) {
 
 async function getCoordinates(city, state) {
 
-    const coordinatesApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city},${state},840&limit=1&appid=${apiKey}`;
+    const coordinatesApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city},${state},840&limit=1&appid=${apiKey}`; // 840 = USA
     const response = await fetch(coordinatesApiUrl);
     const data = await response.json();
 
@@ -41,12 +41,6 @@ async function getWeatherData(latitude, longitude, city, state) {
 
     populateCurrentWeather(data.current.temp, data.current.weather[0].main, city, state);
     populateHourlyWeather(data.hourly);
-    // convertToLocalTime().then({
-    //     function(times) {
-    //         populateHourlyWeather();
-    //     }
-    // });
-    // convertToLocalTime();
 }
 
 function populateCurrentWeather(currentTemp, currentDescription, cityName, stateName) {
@@ -58,15 +52,20 @@ function populateCurrentWeather(currentTemp, currentDescription, cityName, state
 
 async function populateHourlyWeather(hourlyData) {
     console.log(hourlyData);
-    const convertedTimes = await convertToLocalTime(1725595200);
 
-    console.log(convertedTimes);
+    let hourlyForecastHours = [];
+    for (let i = 0; i < 7; i++) {
+        const convertedTime = await convertToLocalTime(hourlyData[i].dt);
+        hourlyForecastHours.push(convertedTime);
+    }
+
+    console.log(hourlyForecastHours);
 
 }
 
 function convertToLocalTime(unixTimestamp) {
     const date = new Date(unixTimestamp * 1000);
-    const hours = ((date.getHours() + 11) % 12 + 1);
+    const hours = ((date.getHours() + 11) % 12 + 1); // Converting to 12-hour format
 
     return hours;
 }
