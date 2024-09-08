@@ -56,13 +56,14 @@ async function populateHourlyWeather(hourlyData) {
     let hourlyForecastHours = [];
     for (let i = 0; i < 7; i++) {
         const convertedTime = await convertToLocalTime(hourlyData[i].dt);
-        hourlyForecastHours.push(convertedTime);
+        hourlyForecastHours.push([convertedTime, hourlyData[i].temp]); // [time, temperature]
     }
 
     console.log(hourlyForecastHours);
 
-}
+    
 
+}
 function convertToLocalTime(unixTimestamp) {
     const date = new Date(unixTimestamp * 1000);
     const hours = ((date.getHours() + 11) % 12 + 1); // Converting to 12-hour format
