@@ -11,7 +11,7 @@ document.querySelector("form").addEventListener("submit", function(e) {
         return getCoordinates(city, state);
     }
 
-    console.log("Error");
+    console.log("Error here");
 
 });
 
