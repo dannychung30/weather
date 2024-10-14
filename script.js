@@ -40,7 +40,7 @@ async function getWeatherData(latitude, longitude, city, state) {
     console.log(data.hourly[6]);
 
     populateCurrentWeather(data.current.temp, data.current.weather[0].main, city, state);
-    populateHourlyWeather(data.hourly);
+    calculateHourlyWeather(data.hourly);
 }
 
 function populateCurrentWeather(currentTemp, currentDescription, cityName, stateName) {
@@ -50,22 +50,28 @@ function populateCurrentWeather(currentTemp, currentDescription, cityName, state
     document.querySelector(".current-weather-info .description").innerText = currentDescription;
 }
 
-async function populateHourlyWeather(hourlyData) {
+async function calculateHourlyWeather(hourlyData) {
     console.log(hourlyData);
 
     let hourlyForecastHours = [];
     for (let i = 0; i < 7; i++) {
         const convertedTime = await convertToLocalTime(hourlyData[i].dt);
-        hourlyForecastHours.push([convertedTime, hourlyData[i].temp]); // [time, temperature]
+        hourlyForecastHours.push([convertedTime, hourlyData[i].temp]); // [[time, temperature], [time, temperature], ...]
     }
 
     console.log(hourlyForecastHours);
-
-    
-
+    populateHourlyWeather(hourlyForecastHours);
 }
+
+function populateHourlyWeather(listOfTimeTemp) {
+    listOfTimeTemp.forEach((timeTemp, index) => {
+        document.querySelector(`.hourly-forecast .forecast-row .forecast${index.toString()} .time-hour`).innerText = timeTemp[0];
+        document.querySelector(`.hourly-forecast .forecast-row .forecast${index.toString()} .temp-hour`).innerText = timeTemp[1];
+    });
+}
+
 function convertToLocalTime(unixTimestamp) {
-    const date = new Date(unixTimestamp * 1000);
+    const date = new Date(unixTimestamp * 1000); // Converting unixTimestamp, which is in seconds, to milliseconds
     const hours = ((date.getHours() + 11) % 12 + 1); // Converting to 12-hour format
 
     return hours;
