@@ -46,7 +46,7 @@ async function getWeatherData(latitude, longitude, city, state) {
         console.log(data.hourly[6]);
 
         populateCurrentWeather(data.current.temp, data.current.weather[0].main, city, state);
-        populateHighLow(data.daily[0]);
+        populateCurrentHighLow([data.daily[0].temp.max, data.daily[0].temp.min]);
         calculateHourlyWeather(data.hourly);
     } catch(error) {
         console.error(error);
@@ -61,9 +61,10 @@ function populateCurrentWeather(currentTemp, currentDescription, cityName, state
     document.querySelector(".current-weather-info .description").innerText = currentDescription;
 }
 
-function populateHighLow() {
+function populateCurrentHighLow(highLow) {
 
-
+    document.querySelector(".current-weather-info .high-low-temps .high-temp").innerText = Math.round(parseFloat(highLow[0])).toString();
+    document.querySelector(".current-weather-info .high-low-temps .low-temp").innerText = Math.round(parseFloat(highLow[1])).toString();
 }
 
 async function calculateHourlyWeather(hourlyData) {
