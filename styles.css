@@ -3,6 +3,18 @@ body, html {
     box-sizing: border-box;
 }
 
+.center-items {
+    display: grid;
+    place-items: center;
+}
+
+.max-width {
+    width: 430px;
+    max-width: 100%;
+    margin: 0 1.5em;
+}
+
+/* CURRENT WEATHER INFO START */
 .current-weather-info .flex-wrapper {
     display: flex;
     flex-direction: column;
@@ -19,6 +31,7 @@ body, html {
     font-size: 1.125em;
     font-weight: 500;
     margin: 0;
+    opacity: 0.5;
 }
 
 .current-weather-info .temperature {
@@ -27,6 +40,7 @@ body, html {
 
 .current-weather-info .description {
     font-size: 1.25em;
+    margin: 0;
 }
 
 .current-weather-info .high-low-temps {
@@ -34,3 +48,32 @@ body, html {
     column-gap: 1em;
     font-size: 1.25em;
 }
+
+.current-weather-info .high-low-temps p {
+    margin: 0;
+}
+/* CURRENT WEATHER INFO END */
+
+
+/* HOURLY WEATHER FORECAST START */
+.hourly-forecast {
+    margin: 3em 0 0 0;
+}
+
+.hourly-forecast .forecast-row {
+    display: flex;
+    column-gap: 2em;
+    overflow-x: scroll;
+}
+
+.hourly-forecast .forecast-row > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 0.5em;
+}
+
+.hourly-forecast .forecast-row .temp-hour {
+    font-size: 1.25em;
+}
+/* HOURLY WEATHER FORECAST END */
