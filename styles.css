@@ -58,12 +58,23 @@ body, html {
 /* HOURLY WEATHER FORECAST START */
 .hourly-forecast {
     margin: 3em 0 0 0;
+    padding: 0.5em 0.75em;
+    backdrop-filter: blur(25px) saturate(100%);
+    -webkit-backdrop-filter: blur(25px) saturate(100%);
+    background-color: rgba(68, 68, 68, 0.125);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
 }
 
 .hourly-forecast .forecast-row {
     display: flex;
     column-gap: 2em;
     overflow-x: scroll;
+    scrollbar-width: none;
+}
+
+.hourly-forecast .forecast-row::-webkit-scrollbar {
+    display: none;
 }
 
 .hourly-forecast .forecast-row > div {
